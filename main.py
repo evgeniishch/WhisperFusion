@@ -99,10 +99,6 @@ if __name__ == "__main__":
     llm_process = multiprocessing.Process(
         target=llm_provider.run,
         args=(
-            # args.mistral_tensorrt_path,
-            # args.mistral_tokenizer_path,
-            args.phi_tensorrt_path,
-            args.phi_tokenizer_path,
             transcription_queue,
             llm_queue,
             audio_queue,
