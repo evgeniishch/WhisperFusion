@@ -10,3 +10,4 @@ braceexpand
 openai-whisper
 whisperspeech
 soundfile
+openai
