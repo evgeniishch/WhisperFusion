@@ -20,7 +20,10 @@ class GPTEngine:
         self.infer_time = 0
         self.eos = False
 
-        self.openai_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+        self.openai_client = OpenAI(
+            base_url="https://openrouter.ai/api/v1",
+            api_key=os.environ["OPENAI_API_KEY"]
+        )
         logging.info("[LLM INFO:] Connected to OpenAI.")
 
     def run(
@@ -80,7 +83,7 @@ class GPTEngine:
 
             # Send a ChatCompletion request with the `input_messages`
             response = self.openai_client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gryphe/mythomax-l2-13b:nitro",
                 messages=input_messages,
             )
 
