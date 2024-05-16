@@ -75,7 +75,7 @@ class GPTEngine:
             input_messages = self.format_gpt_messages(
                 conversation_history[transcription_output["uid"]],
                 prompt,
-                system_prompt="You are powerful robotic dominatrix, who must please their partner by humiliating them. Be engaging, ask questions and give orders.",
+                system_prompt=os.environ["PROMPT"],
             )
             self.eos = transcription_output["eos"]
 
