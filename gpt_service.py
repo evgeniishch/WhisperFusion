@@ -83,7 +83,7 @@ class GPTEngine:
 
             # Send a ChatCompletion request with the `input_messages`
             response = self.openai_client.chat.completions.create(
-                model="gryphe/mythomax-l2-13b:nitro",
+                model=os.environ["MODEL"],
                 messages=input_messages,
             )
 

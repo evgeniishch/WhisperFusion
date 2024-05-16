@@ -2,18 +2,20 @@ version: '3.8'
 
 services:
   whisperfusion:
-    build:
-      context: docker
-      dockerfile: Dockerfile
-      args:
-        CUDA_ARCH: ${CUDA_ARCH:-89-real;90-real}
-    image: whisperfusion:latest
+    # build:
+    #   context: docker
+    #   dockerfile: Dockerfile
+    #   args:
+    #     CUDA_ARCH: ${CUDA_ARCH:-89-real;90-real}
+    image: voicebot-shchagin
     volumes:
       - type: bind
         source: ./docker/scratch-space
         target: /root/scratch-space
     environment:
       VERBOSE: ${VERBOSE:-false}
+    env_file:
+      - .env
     ports:
       - "8888:8888"
       - "6006:6006"
@@ -23,7 +25,22 @@ services:
           devices:
             - capabilities: ["gpu"]
     entrypoint: ["/root/scratch-space/run-whisperfusion.sh"]
-
+  tts:
+    image: ghcr.io/coqui-ai/xtts-streaming-server:main-cuda121-818a108b41be2dd43dada04bd319fdfcdabc5c6a
+    ports:
+      - "8008:80"
+    # Uncomment the following lines to use your own models
+    # volumes:
+    #   - /media/julian/Workdisk/models/ai_voice_chat:/app/tts_models
+    environment:
+      - COQUI_TOS_AGREED=1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
   nginx:
     image: nginx:latest
     volumes:
