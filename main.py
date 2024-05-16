@@ -13,6 +13,7 @@ from whisper_live.trt_server import TranscriptionServer
 from llm_service import TensorRTLLMEngine
 from tts_service import WhisperSpeechTTS
 from gpt_service import GPTEngine
+from xtts_service import SpeechXTTS
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
@@ -107,7 +108,7 @@ if __name__ == "__main__":
     llm_process.start()
 
     # audio process
-    tts_runner = WhisperSpeechTTS()
+    tts_runner = SpeechXTTS()
     tts_process = multiprocessing.Process(target=tts_runner.run, args=("0.0.0.0", 8888, audio_queue, should_send_server_ready))
     tts_process.start()
 
