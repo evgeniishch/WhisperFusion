@@ -13,9 +13,10 @@ from tqdm import tqdm
 from websockets.sync.server import serve
 
 
-def get_speaker(ref_audio,server_url):
+def get_speaker(ref_audio, server_url):
     files = {"wav_file": ("reference.wav", open(ref_audio, "rb"))}
     response = requests.post(f"{server_url}/clone_speaker", files=files)
+    logging.info(f"[DEBUG:] {response.json()}")
     return response.json()
 
 
@@ -77,8 +78,8 @@ class SpeechXTTS:
         self.initialize_model()
         with open("/app/tts_models/default_speaker.json", "r") as file:
             self.speaker = json.load(file)
-        if os.environ["ref_file"] != "":
-            self.speaker = get_speaker(os.environ["ref_file"], os.environ["xtts_url"])
+        # if os.environ["ref_file"] != "":
+        #     self.speaker = get_speaker(os.environ["ref_file"], os.environ["xtts_url"])
         self.server_url = os.environ["xtts_url"]
         
         logging.info("[WhisperSpeech INFO:] Launched XTTSv2 model. Connect to the WebGUI now.")
