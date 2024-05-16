@@ -72,7 +72,7 @@ class SpeechXTTS:
     def run(self, host, port, audio_queue=None, should_send_server_ready=None):
         logging.info("\n[WhisperSpeech INFO:] Launching XTTSv2 model ...\n")
         
-        with open("./default_speaker.json", "r") as file:
+        with open("/app/tts_models/default_speaker.json", "r") as file:
             self.speaker = json.load(file)
         if os.environ["ref_file"] != "":
             self.speaker = get_speaker(os.environ["ref_file"], os.environ["xtts_url"])
