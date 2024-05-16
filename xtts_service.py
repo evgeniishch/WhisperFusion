@@ -68,10 +68,13 @@ def tts(text, speaker, language, server_url, stream_chunk_size) -> Iterator[byte
 class SpeechXTTS:
     def __init__(self):
         pass
+
+    def initialize_model(self):
+        self.last_llm_response = None
     
     def run(self, host, port, audio_queue=None, should_send_server_ready=None):
         logging.info("\n[WhisperSpeech INFO:] Launching XTTSv2 model ...\n")
-        
+        self.initialize_model()
         with open("/app/tts_models/default_speaker.json", "r") as file:
             self.speaker = json.load(file)
         if os.environ["ref_file"] != "":
